@@ -1,416 +1,341 @@
-# Sistema de Estudantes - API REST
+# 📚 Sistema de Cadastro de Estudantes - API REST
 
-## Projeto
-**Nome do Projeto:** Sistema de Gestão de Estudantes  
-**Descrição Breve:** API REST desenvolvida com Spring Boot para gerenciar alunos e cursos. A aplicação utiliza arquitetura em camadas (Controller → Service → Repository) e retorna apenas JSON em todos os endpoints.
+## 📋 Sobre o Projeto
+
+**Nome do Projeto:** Sistema de Cadastro de Estudantes  
+**Descrição Breve:** API REST simples desenvolvida com Spring Boot para consultar informações sobre cursos e estudantes através de endpoints HTTP. O sistema retorna dados em formato JSON e utiliza dados inicializados automaticamente na aplicação.
 
 **Desenvolvido por:** Lucas Lessa  
 **Matrícula:** 20246881
 
 ---
 
-## Tecnologias Utilizadas
+## 🛠️ Tecnologias Utilizadas
+
 - **Java 21**
 - **Spring Boot 4.0.3**
 - **Spring Data JPA**
 - **H2 Database** (banco em memória)
-- **Lombok** (redução de boilerplate)
 - **Maven**
+- **Lombok**
 
 ---
 
-## Como Executar o Projeto
+## 🚀 Como Executar o Projeto
 
 ### Pré-requisitos
 - Java 21 instalado
-- Maven instalado
-- Git (opcional)
+- Maven instalado (ou use o mvnw fornecido)
 
 ### Passos para Execução
 
-1. **Clonar ou baixar o repositório**
-   ```bash
-   cd sistema_estudantes/spring-boot-2
+1. **Abrir o prompt de comando (cmd.exe)**
+
+2. **Navegar até a pasta do projeto**
+   ```cmd
+   cd "D:\Biopark\3 PERIODO\saas\aula 02\sistema_estudantes\spring-boot-2"
    ```
 
-2. **Compilar o projeto**
-   ```bash
-   mvn clean package -DskipTests
+3. **Compilar o projeto (opcional)**
+   ```cmd
+   mvnw clean package -DskipTests
    ```
 
-3. **Executar a aplicação**
-   ```bash
-   mvn spring-boot:run
+4. **Executar a aplicação**
+   ```cmd
+   mvnw spring-boot:run
    ```
 
-4. **Verificar se a aplicação está rodando**
-   - A aplicação estará disponível em: **http://localhost:8080/api**
-   - Console H2: **http://localhost:8080/api/h2-console**
+5. **Verificar se a aplicação está rodando**
+   - Você verá a mensagem: `Tomcat started on port(s): 8080 (http)`
+   - A aplicação estará disponível em: **http://localhost:8080**
 
 ---
 
-## Lista de Todos os Endpoints Disponíveis
+## 📡 Endpoints Disponíveis
 
-### 1. Alunos
+### ✅ Endpoint 1: Informações do Sistema
+- **Rota:** `/api/sistema/info`
+- **Método:** `GET`
+- **Descrição:** Retorna informações sobre o sistema
+- **Retorno:** JSON com nome, versão, data/hora e status
 
-| Método | Endpoint | Descrição |
-|--------|----------|-----------|
-| GET | `/alunos` | Listar todos os alunos |
-| GET | `/alunos/{id}` | Buscar aluno por ID |
-| POST | `/alunos` | Criar novo aluno |
-| PUT | `/alunos/{id}` | Atualizar aluno |
-| DELETE | `/alunos/{id}` | Excluir aluno |
-| GET | `/alunos/saudacao/{id}` | Obter saudação personalizada |
+**URL para testar:**
+```
+http://localhost:8080/api/sistema/info
+```
 
-### 2. Cursos
-
-| Método | Endpoint | Descrição |
-|--------|----------|-----------|
-| GET | `/cursos` | Listar todos os cursos |
-| GET | `/cursos/{id}` | Buscar curso por ID |
-| POST | `/cursos` | Criar novo curso |
-| PUT | `/cursos/{id}` | Atualizar curso |
-| DELETE | `/cursos/{id}` | Excluir curso |
-
-### 3. Informações da Aplicação
-
-| Método | Endpoint | Descrição |
-|--------|----------|-----------|
-| GET | `/info` | Informações gerais da aplicação |
-| GET | `/info/saude` | Health check da aplicação |
+**Exemplo de resposta:**
+```json
+{
+    "nome": "Sistema de Cadastro de Estudantes",
+    "versao": "1.0.0",
+    "dataHora": "2026-03-05T19:53:41.123-03:00",
+    "status": "operacional"
+}
+```
 
 ---
 
-## Exemplos de Uso - URLs para Testar Cada Endpoint
+### ✅ Endpoint 2: Listar Cursos Disponíveis
+- **Rota:** `/api/cursos`
+- **Método:** `GET`
+- **Descrição:** Lista todos os 5 cursos disponíveis
+- **Retorno:** Array JSON com nomes dos cursos
 
-### Base URL
+**URL para testar:**
 ```
-http://localhost:8080/api
+http://localhost:8080/api/cursos
 ```
 
-### 1. Listar todos os alunos
-```
-GET http://localhost:8080/api/alunos
-```
-**Resposta esperada (200 OK):**
+**Exemplo de resposta:**
 ```json
 [
-  {
-    "id": 1,
-    "nome": "Eduardo Longen Correa",
-    "email": "eduardo.longen@email.com",
+    "Engenharia de Software",
+    "Ciência da Computação",
+    "Sistemas de Informação",
+    "Análise e Desenvolvimento de Sistemas",
+    "Engenharia de Computação"
+]
+```
+
+---
+
+### ✅ Endpoint 3: Buscar Curso por ID
+- **Rota:** `/api/cursos/{id}`
+- **Método:** `GET`
+- **Descrição:** Busca um curso específico pelo ID (1 a 5)
+- **Parâmetro:** `{id}` = número de 1 a 5
+
+**URLs para testar:**
+```
+http://localhost:8080/api/cursos/1
+http://localhost:8080/api/cursos/2
+http://localhost:8080/api/cursos/3
+http://localhost:8080/api/cursos/4
+http://localhost:8080/api/cursos/5
+```
+
+**Exemplo de resposta para /api/cursos/1:**
+```
+"Engenharia de Software"
+```
+
+**Cursos cadastrados:**
+- ID 1 → Engenharia de Software
+- ID 2 → Ciência da Computação
+- ID 3 → Sistemas de Informação
+- ID 4 → Análise e Desenvolvimento de Sistemas
+- ID 5 → Engenharia de Computação
+
+---
+
+### ✅ Endpoint 4: Informações de Estudante por Matrícula
+- **Rota:** `/api/estudantes/{matricula}`
+- **Método:** `GET`
+- **Descrição:** Retorna informações completas de um estudante
+- **Parâmetro:** `{matricula}` = matrícula do estudante (string)
+- **Retorno:** JSON com matrícula, nome, curso e semestre
+
+**URLs para testar:**
+```
+http://localhost:8080/api/estudantes/20240001
+http://localhost:8080/api/estudantes/20240002
+http://localhost:8080/api/estudantes/20240003
+```
+
+**Estudantes cadastrados:**
+
+**GET /api/estudantes/20240001** - João Silva
+```json
+{
+    "matricula": "20240001",
+    "nome": "João Silva",
     "curso": "Engenharia de Software",
-    "matricula": "20222720"
-  },
-  {
-    "id": 2,
-    "nome": "Maria Bordignon",
-    "email": "maria.bordignon@email.com",
+    "semestre": 3
+}
+```
+
+**GET /api/estudantes/20240002** - Maria Santos
+```json
+{
+    "matricula": "20240002",
+    "nome": "Maria Santos",
     "curso": "Ciência da Computação",
-    "matricula": "2025002"
-  }
-]
+    "semestre": 5
+}
 ```
 
-### 2. Buscar aluno por ID
-```
-GET http://localhost:8080/api/alunos/1
-```
-**Resposta esperada (200 OK):**
+**GET /api/estudantes/20240003** - Pedro Oliveira
 ```json
 {
-  "id": 1,
-  "nome": "Eduardo Longen Correa",
-  "email": "eduardo.longen@email.com",
-  "curso": "Engenharia de Software",
-  "matricula": "20222720"
-}
-```
-
-### 3. Criar novo aluno
-```
-POST http://localhost:8080/api/alunos
-Content-Type: application/json
-
-{
-  "nome": "João Silva",
-  "email": "joao.silva@email.com",
-  "curso": "Ciência da Computação",
-  "matricula": "2025004"
-}
-```
-**Resposta esperada (201 Created):**
-```json
-{
-  "id": 4,
-  "nome": "João Silva",
-  "email": "joao.silva@email.com",
-  "curso": "Ciência da Computação",
-  "matricula": "2025004"
-}
-```
-
-### 4. Atualizar aluno
-```
-PUT http://localhost:8080/api/alunos/1
-Content-Type: application/json
-
-{
-  "nome": "Eduardo Longen Correa - Atualizado",
-  "email": "eduardo.novo@email.com",
-  "curso": "Engenharia de Software",
-  "matricula": "20222720"
-}
-```
-**Resposta esperada (200 OK):**
-```json
-{
-  "id": 1,
-  "nome": "Eduardo Longen Correa - Atualizado",
-  "email": "eduardo.novo@email.com",
-  "curso": "Engenharia de Software",
-  "matricula": "20222720"
-}
-```
-
-### 5. Excluir aluno
-```
-DELETE http://localhost:8080/api/alunos/4
-```
-**Resposta esperada (204 No Content)** - sem corpo na resposta
-
-### 6. Saudação personalizada
-```
-GET http://localhost:8080/api/alunos/saudacao/1
-```
-**Resposta esperada (200 OK):**
-```json
-{
-  "saudacao": "Olá, Eduardo Longen Correa! Bem-vindo(a) ao Spring Boot!"
+    "matricula": "20240003",
+    "nome": "Pedro Oliveira",
+    "curso": "Sistemas de Informação",
+    "semestre": 2
 }
 ```
 
 ---
 
-### 7. Listar todos os cursos
+### 🎁 Endpoint 5: Endpoint Criativo - Listar Estudantes por Curso
+- **Rota:** `/api/estudantes`
+- **Método:** `GET`
+- **Descrição:** Lista todos os estudantes (ENDPOINT EXTRA)
+- **Retorno:** Array JSON com todos os estudantes e suas informações
+
+**URL para testar:**
 ```
-GET http://localhost:8080/api/cursos
+http://localhost:8080/api/estudantes
 ```
-**Resposta esperada (200 OK):**
+
+**Exemplo de resposta:**
 ```json
 [
-  {
-    "id": 1,
-    "nome": "Engenharia de Software"
-  },
-  {
-    "id": 2,
-    "nome": "Ciência da Computação"
-  }
+    {
+        "id": 1,
+        "nome": "João Silva",
+        "email": "joao.silva@email.com",
+        "matricula": "20240001",
+        "semestre": 3,
+        "curso": {
+            "id": 1,
+            "nome": "Engenharia de Software"
+        }
+    },
+    {
+        "id": 2,
+        "nome": "Maria Santos",
+        "email": "maria.santos@email.com",
+        "matricula": "20240002",
+        "semestre": 5,
+        "curso": {
+            "id": 2,
+            "nome": "Ciência da Computação"
+        }
+    },
+    {
+        "id": 3,
+        "nome": "Pedro Oliveira",
+        "email": "pedro.oliveira@email.com",
+        "matricula": "20240003",
+        "semestre": 2,
+        "curso": {
+            "id": 3,
+            "nome": "Sistemas de Informação"
+        }
+    }
 ]
 ```
 
-### 8. Buscar curso por ID
-```
-GET http://localhost:8080/api/cursos/1
-```
-**Resposta esperada (200 OK):**
-```json
-{
-  "id": 1,
-  "nome": "Engenharia de Software"
-}
-```
+---
 
-### 9. Criar novo curso
-```
-POST http://localhost:8080/api/cursos
-Content-Type: application/json
+## 📝 Resumo de Todos os Endpoints
 
-{
-  "nome": "Ciência de Dados"
-}
-```
-**Resposta esperada (201 Created):**
-```json
-{
-  "id": 4,
-  "nome": "Ciência de Dados"
-}
-```
-
-### 10. Atualizar curso
-```
-PUT http://localhost:8080/api/cursos/1
-Content-Type: application/json
-
-{
-  "nome": "Engenharia de Software Avançada"
-}
-```
-**Resposta esperada (200 OK):**
-```json
-{
-  "id": 1,
-  "nome": "Engenharia de Software Avançada"
-}
-```
-
-### 11. Excluir curso
-```
-DELETE http://localhost:8080/api/cursos/2
-```
-**Resposta esperada (204 No Content)** - sem corpo na resposta
+| Endpoint | Método | Descrição | Retorno |
+|----------|--------|-----------|---------|
+| `/api/sistema/info` | GET | Informações do sistema | JSON com nome, versão, data/hora, status |
+| `/api/cursos` | GET | Lista todos os cursos | Array JSON de 5 cursos |
+| `/api/cursos/{id}` | GET | Busca curso por ID | Nome do curso (texto) |
+| `/api/estudantes/{matricula}` | GET | Busca estudante por matrícula | JSON com matrícula, nome, curso, semestre |
+| `/api/estudantes` | GET | Lista todos os estudantes | Array JSON de estudantes |
 
 ---
 
-### 12. Informações gerais da aplicação
-```
-GET http://localhost:8080/api/info
-```
-**Resposta esperada (200 OK):**
-```json
-{
-  "aplicacao": "Sistema de Estudantes",
-  "versao": "1.0.0",
-  "descricao": "API REST para gerenciar alunos e cursos"
-}
-```
+## ✅ Checklist de Requisitos Atendidos
 
-### 13. Health check da aplicação
-```
-GET http://localhost:8080/api/info/saude
-```
-**Resposta esperada (200 OK):**
-```json
-{
-  "status": "UP",
-  "mensagem": "Aplicação está funcionando normalmente"
-}
+- ✅ **Projeto Spring Boot** criado com sucesso
+- ✅ **Estrutura de pacotes** adequada (controller, service, repository, model, config)
+- ✅ **Convenções de nomenclatura Java** seguidas
+- ✅ **Endpoint 1:** `/api/sistema/info` - Retorna nome, versão, data/hora e status
+- ✅ **Endpoint 2:** `/api/cursos` - Lista 5 cursos disponíveis
+- ✅ **Endpoint 3:** `/api/cursos/{id}` - Busca curso por ID (1-5)
+- ✅ **Endpoint 4:** `/api/estudantes/{matricula}` - Busca estudante por matrícula (3+ estudantes)
+- ✅ **Endpoint Criativo:** `/api/estudantes` - Lista todos os estudantes
+- ✅ **Dados inicializados** - Carregados automaticamente na inicialização
+- ✅ **Retorno em JSON** para todos os endpoints
+- ✅ **README.md completo** com documentação
+- ✅ **Exemplos de URLs** para testar cada endpoint
+- ✅ **Nome e matrícula** do desenvolvedor inclusos
+
+---
+
+## 🧪 Como Testar os Endpoints
+
+### Opção 1: Navegador Web
+Copie e cole qualquer uma destas URLs na barra de endereço do seu navegador:
+- http://localhost:8080/api/sistema/info
+- http://localhost:8080/api/cursos
+- http://localhost:8080/api/cursos/1
+- http://localhost:8080/api/estudantes/20240001
+- http://localhost:8080/api/estudantes
+
+### Opção 2: Postman (Recomendado)
+1. Abra o Postman
+2. Crie uma nova requisição GET
+3. Cole uma das URLs acima
+4. Clique em "Send"
+5. Veja a resposta em JSON
+
+### Opção 3: cURL (Terminal)
+```cmd
+curl http://localhost:8080/api/sistema/info
+curl http://localhost:8080/api/cursos
+curl http://localhost:8080/api/cursos/1
+curl http://localhost:8080/api/estudantes/20240001
+curl http://localhost:8080/api/estudantes
 ```
 
 ---
 
-## Estrutura do Projeto
+## 📌 Informações Importantes
+
+- **Porta padrão:** 8080
+- **Banco de dados:** H2 em memória (não precisa de configuração externa)
+- **Dados:** Carregados automaticamente na inicialização via `DataLoader`
+- **Formato:** Todos os endpoints retornam JSON
+- **Autenticação:** Não requerida
+
+---
+
+## 🔧 Estrutura do Projeto
 
 ```
-src/main/java/org/example/atividade1/
-├── Atividade1Application.java          # Classe principal da aplicação
-├── config/
-│   └── DataLoader.java                 # Carrega dados iniciais (3 alunos)
-├── controller/
-│   ├── AlunoController.java            # REST endpoints de alunos
-│   ├── CursoController.java            # REST endpoints de cursos
-│   └── InfoController.java             # REST endpoints de informação
-├── model/
-│   ├── Aluno.java                      # Entidade Aluno com JPA
-│   └── Curso.java                      # Entidade Curso com JPA
-├── repository/
-│   ├── AlunoRepository.java            # JPA Repository para Aluno
-│   └── CursoRepository.java            # JPA Repository para Curso
-└── service/
-    ├── AlunoService.java               # Lógica de negócio - Aluno
-    └── CursoService.java               # Lógica de negócio - Curso
-
-src/main/resources/
-└── application.properties               # Configurações da aplicação
+spring-boot-2/
+├── src/main/java/org/example/atividade1/
+│   ├── Atividade1Application.java      (Classe principal)
+│   ├── config/
+│   │   └── DataLoader.java             (Carrega dados iniciais)
+│   ├── controller/
+│   │   ├── InfoController.java         (Endpoint: /api/sistema/info)
+│   │   ├── CursoController.java        (Endpoints: /api/cursos)
+│   │   └── AlunoController.java        (Endpoints: /api/estudantes)
+│   ├── model/
+│   │   ├── Aluno.java                  (Entidade de estudante)
+│   │   └── Curso.java                  (Entidade de curso)
+│   ├── repository/
+│   │   ├── AlunoRepository.java        (Acesso a dados de alunos)
+│   │   └── CursoRepository.java        (Acesso a dados de cursos)
+│   └── service/
+│       ├── AlunoService.java           (Lógica de alunos)
+│       └── CursoService.java           (Lógica de cursos)
+├── src/main/resources/
+│   └── application.properties          (Configurações)
+├── pom.xml                             (Dependências Maven)
+└── README.md                           (Este arquivo)
 ```
 
 ---
 
-## Dados Iniciais
+## 📞 Suporte
 
-A aplicação carrega automaticamente 3 alunos de exemplo ao iniciar:
-1. **Eduardo Longen Correa** - Engenharia de Software - Matrícula: 20222720
-2. **Maria Bordignon** - Ciência da Computação - Matrícula: 2025002
-3. **Daemon Targaryen** - Sistemas de Informação - Matrícula: 2025003
-
----
-
-## Banco de Dados
-
-A aplicação utiliza **H2 Database** (banco de dados em memória).
-
-### Acessar Console H2
-- **URL:** http://localhost:8080/api/h2-console
-- **JDBC URL:** `jdbc:h2:mem:testdb`
-- **Username:** `sa`
-- **Password:** (deixe em branco)
+Em caso de dúvidas ou problemas:
+1. Certifique-se de que Java 21 está instalado: `java -version`
+2. Verifique se Maven está instalado: `mvn -version`
+3. Certifique-se de que a porta 8080 não está em uso
+4. Reinicie a aplicação se necessário
 
 ---
 
-## Tratamento de Erros
-
-A API retorna os seguintes códigos HTTP:
-
-| Código | Descrição | Exemplo |
-|--------|-----------|---------|
-| **200** | OK - Requisição bem-sucedida | GET, PUT com sucesso |
-| **201** | Created - Recurso criado | POST com sucesso |
-| **204** | No Content - Sucesso sem resposta | DELETE com sucesso |
-| **400** | Bad Request - Requisição inválida | JSON malformado |
-| **404** | Not Found - Recurso não encontrado | ID inexistente |
-| **500** | Internal Server Error - Erro do servidor | Exceção não tratada |
-
----
-
-## Como Testar os Endpoints
-
-### Opção 1: Usar o arquivo `requests.http`
-O projeto inclui um arquivo `requests.http` que pode ser usado com extensões como REST Client do VS Code para testar todos os endpoints.
-
-### Opção 2: Usar cURL (linha de comando)
-```bash
-# Listar alunos
-curl http://localhost:8080/api/alunos
-
-# Criar novo aluno
-curl -X POST http://localhost:8080/api/alunos \
-  -H "Content-Type: application/json" \
-  -d '{"nome":"João Silva","email":"joao@email.com","curso":"Computação","matricula":"2025004"}'
-
-# Buscar aluno específico
-curl http://localhost:8080/api/alunos/1
-
-# Atualizar aluno
-curl -X PUT http://localhost:8080/api/alunos/1 \
-  -H "Content-Type: application/json" \
-  -d '{"nome":"Novo Nome","email":"novo@email.com","curso":"Nova Curso","matricula":"20246881"}'
-
-# Excluir aluno
-curl -X DELETE http://localhost:8080/api/alunos/1
-```
-
-### Opção 3: Usar Postman ou Insomnia
-1. Importe as URLs acima nos seus clientes REST
-2. Configure o Content-Type como `application/json` para POST e PUT
-3. Teste cada endpoint
-
----
-
-## Logging
-
-A aplicação gera logs detalhados durante a execução:
-- **INFO** - Logs gerais da aplicação
-- **DEBUG** - Requisições HTTP e queries SQL
-- **TRACE** - Binding de parâmetros SQL
-
-As configurações de logging podem ser ajustadas em `application.properties`.
-
----
-
-## Notas Importantes
-
-- ✅ Todos os endpoints retornam **apenas JSON**
-- ✅ Arquitetura em **3 camadas** (Controller → Service → Repository)
-- ✅ Banco de dados **H2 em memória** (dados perdidos ao reiniciar)
-- ✅ **Validação de erros** com tratamento de exceções
-- ✅ **DataLoader** carrega dados iniciais automaticamente
-- ✅ **CORS** habilitado para requisições de diferentes origens
-
----
-
-## Autor
-**Nome:** Lucas Lessa  
-**Matrícula:** 20246881  
-**Disciplina:** Arquitetura de Sistemas (SaaS)
+**Desenvolvido por:** Lucas Lessa (20246881)  
+**Data:** 2026-03-05
