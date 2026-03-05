@@ -35,8 +35,12 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     Optional<Aluno> findByEmail(String email);
 
     /**
-     * Busca um aluno pela matrícula.
-     * "findByMatricula" → SELECT * FROM alunos WHERE matricula = ?
+     * Método de busca personalizado: encontra um aluno pela matrícula.
+     *
+     * O Spring Data JPA interpreta o nome do método automaticamente:
+     *   "findByMatricula" → SELECT * FROM alunos WHERE matricula = ?
+     *
+     * Retorna Optional para evitar NullPointerException caso não encontre resultado.
      */
     Optional<Aluno> findByMatricula(String matricula);
 }
