@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Controller responsável por tratar as requisições HTTP relacionadas a Alunos.
+ * Controller responsável por tratar as requisições HTTP relacionadas a Estudantes.
  *
  * O Controller é a camada que recebe as requisições do navegador,
  * chama a camada de serviço para processar a lógica e retorna a view (página HTML).
@@ -19,19 +19,39 @@ import java.util.Map;
  * Fluxo: Navegador → Controller → Service → Repository → Banco de Dados
  *
  * @RestController      - Indica que esta classe é um REST controller que retorna JSON.
- * @RequestMapping  - Define o prefixo "/alunos" para todas as rotas deste controller.
+ * @RequestMapping  - Define o prefixo "/api/estudantes" para todas as rotas deste controller.
  * @RequiredArgsConstructor - Lombok: injeta automaticamente as dependências via construtor.
  */
 @RestController
-@RequestMapping("/alunos")
+@RequestMapping("/api/estudantes")
 @RequiredArgsConstructor
 public class AlunoController {
 
     private final AlunoService alunoService;
 
     /**
-     * GET /alunos
-     * Lista todos os alunos cadastrados e retorna como JSON.
+     * GET /api/estudantes/{matricula}
+     * Busca um estudante pela matrícula
+     */
+    @GetMapping("/{matricula}")
+    public ResponseEntity<Map<String, Object>> buscarPorMatricula(@PathVariable String matricula) {
+        try {
+            Aluno aluno = alunoService.buscarPorMatricula(matricula);
+            Map<String, Object> response = Map.of(
+                    "matricula", aluno.getMatricula(),
+                    "nome", aluno.getNome(),
+                    "curso", aluno.getCurso().getNome(),
+                    "semestre", aluno.getSemestre() != null ? aluno.getSemestre() : 1
+            );
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+     * GET /api/estudantes
+     * Lista todos os estudantes
      */
     @GetMapping
     public ResponseEntity<List<Aluno>> listar() {
@@ -40,25 +60,8 @@ public class AlunoController {
     }
 
     /**
-     * GET /alunos/{id}
-     * Busca um aluno pelo ID e retorna como JSON.
-     *
-     * @PathVariable - Captura o valor {id} da URL.
-     * Exemplo: /alunos/1 → id = 1
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<Aluno> buscarPorId(@PathVariable Long id) {
-        try {
-            Aluno aluno = alunoService.buscarPorId(id);
-            return ResponseEntity.ok(aluno);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    /**
-     * POST /alunos
-     * Cria um novo aluno com os dados do corpo da requisição em JSON.
+     * POST /api/estudantes
+     * Cria um novo estudante com os dados do corpo da requisição em JSON.
      *
      * @param aluno - Objeto preenchido automaticamente com os dados do JSON.
      */
@@ -69,8 +72,8 @@ public class AlunoController {
     }
 
     /**
-     * PUT /alunos/{id}
-     * Atualiza os dados de um aluno existente.
+     * PUT /api/estudantes/{id}
+     * Atualiza os dados de um estudante existente.
      *
      * @PathVariable - Captura o valor {id} da URL.
      * @RequestBody  - Mapeia o corpo da requisição JSON para o objeto Aluno.
@@ -91,8 +94,8 @@ public class AlunoController {
     }
 
     /**
-     * DELETE /alunos/{id}
-     * Exclui um aluno pelo ID.
+     * DELETE /api/estudantes/{id}
+     * Exclui um estudante pelo ID.
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
@@ -105,7 +108,7 @@ public class AlunoController {
     }
 
     /**
-     * GET /alunos/saudacao/{id}
+     * GET /api/estudantes/saudacao/{id}
      * Retorna uma saudação personalizada em JSON.
      */
     @GetMapping("/saudacao/{id}")

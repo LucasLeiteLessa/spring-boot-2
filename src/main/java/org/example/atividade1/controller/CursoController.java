@@ -13,18 +13,18 @@ import java.util.List;
  * Controller responsável por tratar as requisições HTTP relacionadas a Cursos.
  *
  * @RestController      - Indica que esta classe é um REST controller que retorna JSON.
- * @RequestMapping  - Define o prefixo "/cursos" para todas as rotas deste controller.
+ * @RequestMapping  - Define o prefixo "/api/cursos" para todas as rotas deste controller.
  * @RequiredArgsConstructor - Lombok: injeta automaticamente as dependências via construtor.
  */
 @RestController
-@RequestMapping("/cursos")
+@RequestMapping("/api/cursos")
 @RequiredArgsConstructor
 public class CursoController {
 
     private final CursoService cursoService;
 
     /**
-     * GET /cursos
+     * GET /api/cursos
      * Lista todos os cursos cadastrados e retorna como JSON.
      */
     @GetMapping
@@ -34,11 +34,11 @@ public class CursoController {
     }
 
     /**
-     * GET /cursos/{id}
+     * GET /api/cursos/{id}
      * Busca um curso pelo ID e retorna como JSON.
      *
      * @PathVariable - Captura o valor {id} da URL.
-     * Exemplo: /cursos/1 → id = 1
+     * Exemplo: /api/cursos/1 → id = 1
      */
     @GetMapping("/{id}")
     public ResponseEntity<Curso> buscarPorId(@PathVariable Long id) {
@@ -51,7 +51,7 @@ public class CursoController {
     }
 
     /**
-     * POST /cursos
+     * POST /api/cursos
      * Cria um novo curso com os dados do corpo da requisição em JSON.
      *
      * @param curso - Objeto preenchido automaticamente com os dados do JSON.
@@ -63,7 +63,7 @@ public class CursoController {
     }
 
     /**
-     * PUT /cursos/{id}
+     * PUT /api/cursos/{id}
      * Atualiza os dados de um curso existente.
      *
      * @PathVariable - Captura o valor {id} da URL.
@@ -82,7 +82,7 @@ public class CursoController {
     }
 
     /**
-     * DELETE /cursos/{id}
+     * DELETE /api/cursos/{id}
      * Exclui um curso pelo ID.
      */
     @DeleteMapping("/{id}")
