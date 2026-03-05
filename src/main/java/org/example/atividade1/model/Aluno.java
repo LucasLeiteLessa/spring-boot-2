@@ -62,6 +62,12 @@ public class Aluno {
     private String matricula;
 
     /**
+     * Semestre atual do aluno.
+     */
+    @Column(nullable = true)
+    private Integer semestre;
+
+    /**
      * Relacionamento com Curso (Many-to-One).
      * Vários alunos podem estar matriculados no mesmo curso.
      *

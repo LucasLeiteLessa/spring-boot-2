@@ -52,7 +52,7 @@ public class Curso {
     /**
      * Relacionamento inverso com Aluno (One-to-Many).
      * Um curso tem vários alunos matriculados.
-     *
+     * 
      * @OneToMany - Um curso possui múltiplos alunos.
      * mappedBy - Indica que o relacionamento é mapeado pelo atributo "curso" na classe Aluno.
      */
