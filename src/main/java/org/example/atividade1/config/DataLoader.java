@@ -27,19 +27,23 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) {
         // Só insere dados se o banco estiver vazio (evita duplicação ao reiniciar)
         if (cursoRepository.count() == 0) {
-            // Criar cursos
-            Curso cursoBCC = new Curso(null, "Engenharia de Software", null);
-            Curso cursoCC = new Curso(null, "Ciência da Computação", null);
-            Curso cursoSI = new Curso(null, "Sistemas de Informação", null);
+            // Criar 5 cursos
+            Curso curso1 = new Curso(null, "Engenharia de Software", null);
+            Curso curso2 = new Curso(null, "Ciência da Computação", null);
+            Curso curso3 = new Curso(null, "Sistemas de Informação", null);
+            Curso curso4 = new Curso(null, "Análise e Desenvolvimento de Sistemas", null);
+            Curso curso5 = new Curso(null, "Engenharia de Computação", null);
 
-            cursoBCC = cursoRepository.save(cursoBCC);
-            cursoCC = cursoRepository.save(cursoCC);
-            cursoSI = cursoRepository.save(cursoSI);
+            curso1 = cursoRepository.save(curso1);
+            curso2 = cursoRepository.save(curso2);
+            curso3 = cursoRepository.save(curso3);
+            curso4 = cursoRepository.save(curso4);
+            curso5 = cursoRepository.save(curso5);
 
-            // Criar alunos vinculados aos cursos
-            alunoRepository.save(new Aluno(null, "Eduardo Longen Correa", "eduardo.longen@email.com", "20222720", cursoBCC));
-            alunoRepository.save(new Aluno(null, "Maria Bordignon", "maria.bordignon@email.com", "2025002", cursoCC));
-            alunoRepository.save(new Aluno(null, "Daemon Targaryen", "daemon@email.com", "2025003", cursoSI));
+            // Criar alunos (mínimo 3) vinculados aos cursos com matrícula e semestre
+            alunoRepository.save(new Aluno(null, "João Silva", "joao.silva@email.com", "20240001", 3, curso1));
+            alunoRepository.save(new Aluno(null, "Maria Santos", "maria.santos@email.com", "20240002", 5, curso2));
+            alunoRepository.save(new Aluno(null, "Pedro Oliveira", "pedro.oliveira@email.com", "20240003", 2, curso3));
 
             System.out.println(">>> Dados iniciais carregados com sucesso!");
             System.out.println(">>> Cursos criados: " + cursoRepository.count());
