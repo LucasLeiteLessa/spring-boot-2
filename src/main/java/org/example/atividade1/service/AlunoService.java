@@ -53,6 +53,15 @@ public class AlunoService {
     }
 
     /**
+     * Busca um aluno pela matrícula.
+     * Lança uma exceção caso não encontre.
+     */
+    public Aluno buscarPorMatricula(String matricula) {
+        return alunoRepository.findByMatricula(matricula)
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado com a matrícula: " + matricula));
+    }
+
+    /**
      * Remove um aluno pelo ID.
      */
     public void excluir(Long id) {
